@@ -12,40 +12,42 @@ const useContador = inicial => {
 }
 
 const useMouseColor = colorInicial => {
-    const [color, setColor] = useState(colorInicial);
-    
-    const cambiarColor = (color) => {
+  const [color, setColor] = useState(colorInicial);
+
+  const cambiarColor = (color) => {
     setColor(color)
   }
 
-    return {color, cambiarColor}
-  }
-  
+  return { color, cambiarColor }
+}
+
 
 function App() {
   const { contador, incrementar } = useContador(0);
   const { color, cambiarColor } = useMouseColor('gray');
-  useEffect(()=>{
+  useEffect(() => {
     const onMouseMove = (event) => {
-      if(event.clientX < window.innerWidth/2){
+      if (event.clientX < window.innerWidth / 2) {
         cambiarColor('gray');
-      }else{
+      } else {
         cambiarColor('black')
       }
     }
     window.addEventListener('mousemove', onMouseMove)
+
+    return () => window.removeEventListener('mousemove', onMouseMove);
   })
-  
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <div style={{ height: '100vh', width: '100%', background: color}}>
+        <div style={{ height: '100vh', width: '100%', background: color }}>
           <p>
-          {contador}
-        </p>
+            {contador}
+          </p>
         </div>
-        
+
         <button onClick={incrementar}>Incrementar</button>
       </header>
     </div>
